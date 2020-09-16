@@ -1,0 +1,32 @@
+.graphs .form {
+  margin: 100px auto; }
+  .graphs .form .input {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px; }
+    .graphs .form .input input {
+      font-size: 1em; }
+    .graphs .form .input .deltaLabel {
+      padding-right: 10px; }
+  .graphs .form .calculate {
+    width: 100px;
+    font-size: 0.9em; }
+
+.graphs .chart {
+  margin: auto; }
+  .graphs .chart .dygraph-label-rotate-right {
+    top: 0 !important;
+    left: -200px !important; }
+  .graphs .chart .dygraph-ylabel {
+    padding-right: 100px;
+    font-size: 1.1em; }
+
+.graphs .green {
+  color: #408000; }
+
+.graphs .purple {
+  color: #400080; }
+
+.graphs .blue {
+  color: #008080; }
