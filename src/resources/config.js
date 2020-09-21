@@ -1,4 +1,4 @@
-import { ylabel } from "../resources/strings";
+import strings from "../resources/strings";
 
 export const graphConfig = {
   axes: {
@@ -8,7 +8,7 @@ export const graphConfig = {
       },
     },
   },
-  ylabel: ylabel,
+  ylabel: strings.ylabel,
 };
 
 export default { graphConfig };

@@ -1,19 +1,26 @@
 import React from "react";
 import Dygraph from "dygraphs";
 import { graphConfig } from "../resources/config";
+import strings from "../resources/strings";
 
 class Graph extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      delta: 0.5,
+      lambda: 0.5,
+      input: "0.5",
       config: graphConfig,
     };
   }
 
   componentDidMount() {
-    new Dygraph(this.refs.chart, this.getData(0, 1), this.state.config);
+    document.addEventListener("keydown", this.onKeyDown, false);
+    this.createGraph();
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.onKeyDown, false);
   }
 
   getData = (start, end) => {
@@ -21,6 +28,8 @@ class Graph extends React.Component {
     let x = start;
 
     while (x <= end) {
+      x = parseFloat(x.toPrecision(4));
+
       const f1 = this.f(x);
       const f2 = this.Q(x);
       const f3 = this.P(x);
@@ -31,21 +40,19 @@ class Graph extends React.Component {
       x = parseFloat(x.toPrecision(4));
     }
 
-    console.log(string);
-
     return string;
   };
 
   f = (t) => {
-    const delta = this.state.delta;
+    const lambda = this.state.lambda;
 
-    return delta * Math.exp(-delta * t);
+    return lambda * Math.exp(-lambda * t);
   };
 
   Q = (t) => {
-    const delta = this.state.delta;
+    const lambda = this.state.lambda;
 
-    return 1 - Math.exp(-delta * t);
+    return 1 - Math.exp(-lambda * t);
   };
 
   P = (t) => {
@@ -54,32 +61,59 @@ class Graph extends React.Component {
 
   onChange = (e) => {
     this.setState({
-      delta: e.target.value,
+      input: e.target.value,
     });
+  };
+
+  checkLambda = () => {
+    return parseFloat(this.state.input.match(/^-?\d*(\.\d+)?$/)) > 0;
+  };
+
+  createGraph = () => {
+    if (this.checkLambda()) {
+      this.setState(
+        {
+          ...this.state.input,
+          lambda: parseFloat(this.state.input),
+        },
+        () => {
+          new Dygraph(this.refs.chart, this.getData(0, 1), this.state.config);
+        }
+      );
+    } else {
+      alert("Некоректні вхідні дані");
+    }
   };
 
   onClick = (e) => {
     e.preventDefault();
 
-    new Dygraph(this.refs.chart, this.getData(0, 1), this.state.config);
+    this.createGraph();
+  };
+
+  onKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.createGraph();
+    }
   };
 
   render() {
     return (
       <div className="form">
         <div className="input">
-          <label htmlFor="delta" className="deltaLabel">
-            Delta
+          <label htmlFor="lambda" className="lambdaLabel">
+            {strings.lambdaText}
           </label>
           <input
             type="text"
-            value={this.state.delta}
+            value={this.state.input}
             onChange={this.onChange}
-            id="delta"
-            className="deltaInput"
+            onKeyPress={this.onKeyPress}
+            id="lambda"
+            className="lambdaInput"
           />
           <button type="button" onClick={this.onClick} className="calculate">
-            Calculate
+            {strings.calculateText}
           </button>
         </div>
         <div ref="chart" className="chart"></div>

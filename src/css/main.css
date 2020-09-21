@@ -7,10 +7,10 @@
     margin-bottom: 50px; }
     .graphs .form .input input {
       font-size: 1em; }
-    .graphs .form .input .deltaLabel {
+    .graphs .form .input .lambdaLabel {
       padding-right: 10px; }
   .graphs .form .calculate {
-    width: 100px;
+    width: 130px;
     font-size: 0.9em; }
 
 .graphs .chart {
