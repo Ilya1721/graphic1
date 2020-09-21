@@ -49,14 +49,14 @@ class Graph extends React.Component {
     return lambda * Math.exp(-lambda * t);
   };
 
-  P = (t) => {
+  Q = (t) => {
     const lambda = this.state.lambda;
 
     return 1 - Math.exp(-lambda * t);
   };
 
-  Q = (t) => {
-    return 1 - this.P(t);
+  P = (t) => {
+    return 1 - this.Q(t);
   };
 
   onChange = (e) => {
