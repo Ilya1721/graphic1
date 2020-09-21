@@ -56,7 +56,7 @@ class Graph extends React.Component {
   };
 
   Q = (t) => {
-    return 1 - this.Q(t);
+    return 1 - this.P(t);
   };
 
   onChange = (e) => {
